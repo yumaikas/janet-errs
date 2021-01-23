@@ -1,16 +1,14 @@
 (import ../err)
- (use testament)
+(use testament)
  
- (deftest err/str-composes
-    (assert-thrown-message "1 2 3 4" (err/str 1 " 2 " 3 " 4"))
- )
+(deftest err/str-composes
+   (assert-thrown-message "1 2 3 4" (err/str 1 " 2 " 3 " 4")))
  
- (deftest ctx-adds-contenxt
-    (assert-thrown-message 
-        "abc \nDetails:\nefg" 
-        (err/wrap "abc"
-            (error "efg")
-        )))
+(deftest ctx-adds-contenxt
+   (assert-thrown-message 
+       "abc \nDetails:\nefg" 
+       (err/wrap "abc"
+           (error "efg"))))
         
 (deftest tracev-all-can-work-with-defs 
     (def outbuf @"")
@@ -21,10 +19,10 @@
             (def b 3)
             (def c (+ a b))
         )
-        (assert-equal c 5 "tracev-all, like tracev, shouldn't introduce new scopes")
-    )
+        (assert-equal c 5 "tracev-all, like tracev, shouldn't introduce new scopes"))
     
     (assert-equivalent outbuf "")
+    # Currently testament doesn't have "assert-truthy" 
     (assert-equal true 
         (if (and
             (string/find "(def a 2)" errbuf)
@@ -32,6 +30,5 @@
             (string/find "(def c (+ a b))" errbuf))
                 true false) 
         "All lines should be traced")
-    
 )
 (run-tests!)
