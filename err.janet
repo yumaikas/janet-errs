@@ -5,8 +5,16 @@
     )
 )
 
-(defmacro str [& args] 
-    ~(error (string  ,;args))
+(defmacro str
+    "Creates a concatented error string"
+    [& args] 
+        ~(error (string  ,;args))
+)
+
+(defmacro signal 
+    "Raises an error as a tuple"
+    [sig & args] 
+        ~(error [,sig (string ,(splice args))])
 )
 
 (defmacro tracev-all

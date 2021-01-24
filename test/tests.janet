@@ -3,6 +3,22 @@
  
 (deftest err/str-composes
    (assert-thrown-message "1 2 3 4" (err/str 1 " 2 " 3 " 4")))
+   
+(deftest err/signal-works
+    (try
+    (do 
+        (err/signal :err "1 2 3 4")
+    )
+    ([err] (do
+        (match err 
+            [:err e] (do 
+                (assert-equal e "1 2 3 4")
+            )
+            _ (error "Couldn't match!")
+        )
+    ))
+    )
+)
  
 (deftest ctx-adds-contenxt
    (assert-thrown-message 
@@ -31,4 +47,7 @@
                 true false) 
         "All lines should be traced")
 )
+
+
 (run-tests!)
+
