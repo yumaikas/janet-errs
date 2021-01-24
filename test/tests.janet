@@ -48,6 +48,20 @@
         "All lines should be traced")
 )
 
+(deftest try*-matches-as-expected 
+    (err/try* 
+        (do (error "EHEHEH"))
+        "EHEHEH" (assert-equal "" "")
+    )
+    
+    (err/try*
+        (err/signal :catch "Uncatchable!")
+        [:catch msg] (assert-equal "Uncatchable!" msg)
+    )
+)
+
+
+
 
 (run-tests!)
 
