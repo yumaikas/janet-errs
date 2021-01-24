@@ -27,7 +27,11 @@
             ,expr 
             ([$err $fib] 
                 (match $err  
-                    ,(splice match-clauses)
+                    ,;(seq 
+                        [clause :in match-clauses 
+                         form :in clause] 
+                        form
+                        )
                     _ (propagate $err $fib))))))
 
 (defmacro tracev-all

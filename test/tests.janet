@@ -51,17 +51,17 @@
 (deftest try*-matches-as-expected 
     (err/try* 
         (do (error "EHEHEH"))
-        "EHEHEH" (assert-equal "" "")
-    )
+        ("EHEHEH" (assert-equal "" "")))
     
     (err/try*
         (err/signal :catch "Uncatchable!")
-        [:catch msg] (assert-equal "Uncatchable!" msg)
-    )
-)
-
-
-
+        ([:catch msg] 
+         (do 
+           (assert-equal "Uncatchable!" msg)
+           (assert-equal true true)))))
+    (err/try*
+        (assert-equal true true))
+  
 
 (run-tests!)
 
