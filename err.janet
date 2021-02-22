@@ -1,21 +1,18 @@
 (defmacro wrap [msg & body] 
+    "If wrap catches an error, it adds context to it, so that it's easier to see what's going on."
     ~(try 
         (do ,(splice body))
-        ([err] (error (string ,msg " \nDetails:\n" err)))
-    )
-)
+        ([err] (error (string ,msg " \nDetails:\n" err)))))
 
 (defmacro str
     "Creates a concatented error string"
     [& args] 
-        ~(error (string  ,(splice args)))
-)
+        ~(error (string  ,(splice args))))
 
 (defmacro signal 
     "Raises an error as a tuple"
     [sig & args] 
-        ~(error [,sig (string ,(splice args))])
-)
+        ~(error [,sig (string ,(splice args))]))
 
 (defmacro try*
     ```Executes an expression, attemts to match it against
